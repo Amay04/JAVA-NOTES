@@ -387,56 +387,50 @@ true
 | Insert/Delete | Slow | Fast | Slow | Top Only |
 | Special Use | General Purpose | Frequent Insert/Delete | Thread-safe List | LIFO Operations |
 
-# HashSet
+# Set Interface
 
 ## Definition
 
-**HashSet** is a class in the Java Collections Framework that implements the **Set** interface. It stores **unique elements** and does **not maintain the insertion order**.
+A **Set** is an interface in the Java Collections Framework that represents a **collection of unique elements**.
 
-Internally, HashSet uses a **HashMap** to store elements, making operations like insertion, deletion, and searching very fast.
+Unlike a List, a Set **does not allow duplicate elements**. If you try to add a duplicate element, it will be ignored automatically.
+
+### Features
+- Stores only unique elements.
+- Does not allow duplicate values.
+- Does not support index-based access.
+- Allows one `null` value (except TreeSet).
+- Dynamic in size.
 
 ---
 
-# Features of HashSet
+# Types of Set
 
-- Stores only unique elements (No duplicates).
+The `Set` interface has three main implementations:
+
+1. HashSet
+2. LinkedHashSet
+3. TreeSet
+
+---
+
+# 1. HashSet
+
+## Definition
+
+`HashSet` is a class that implements the `Set` interface using a **Hash Table**.
+
+It stores unique elements but **does not maintain insertion order**.
+
+### Features
+
+- Stores unique elements.
 - Does not maintain insertion order.
-- Allows **one `null` value**.
-- Provides fast insertion, deletion, and searching.
-- Not synchronized (Not thread-safe).
-- Implements the `Set` interface.
+- Fast insertion, deletion, and searching.
+- Allows one `null` value.
+- Not synchronized.
 
----
-
-# Hierarchy
-
-```text
-Iterable
-    |
-Collection
-    |
-   Set
-    |
- HashSet
-```
-
----
-
-# Syntax
-
-```java
-HashSet<DataType> set = new HashSet<>();
-```
-
-Example
-
-```java
-HashSet<String> languages = new HashSet<>();
-```
-
----
-
-# Example
+### Example
 
 ```java
 import java.util.*;
@@ -450,24 +444,114 @@ public class HashSetExample {
         set.add("Java");
         set.add("Python");
         set.add("Java");
-        set.add("C++");
 
         System.out.println(set);
     }
 }
 ```
 
-### Output
+**Output**
 
 ```
-[Java, Python, C++]
+[Python, Java]
 ```
 
-> **Note:** The output order may be different because `HashSet` does not preserve insertion order.
+> Output order may vary because HashSet does not maintain insertion order.
 
 ---
 
-# HashSet Methods
+# 2. LinkedHashSet
+
+## Definition
+
+`LinkedHashSet` is a class that implements the `Set` interface using a **Hash Table and Linked List**.
+
+It stores unique elements while maintaining the insertion order.
+
+### Features
+
+- Stores unique elements.
+- Maintains insertion order.
+- Faster than TreeSet.
+- Allows one `null` value.
+- Not synchronized.
+
+### Example
+
+```java
+import java.util.*;
+
+public class LinkedHashSetExample {
+
+    public static void main(String[] args) {
+
+        LinkedHashSet<String> set = new LinkedHashSet<>();
+
+        set.add("Java");
+        set.add("Python");
+        set.add("Java");
+
+        System.out.println(set);
+    }
+}
+```
+
+**Output**
+
+```
+[Java, Python]
+```
+
+---
+
+# 3. TreeSet
+
+## Definition
+
+`TreeSet` is a class that implements the `Set` interface using a **Red-Black Tree**.
+
+It stores elements in **sorted (ascending) order**.
+
+### Features
+
+- Stores unique elements.
+- Automatically sorts elements.
+- Does not allow `null`.
+- Slower than HashSet.
+- Not synchronized.
+
+### Example
+
+```java
+import java.util.*;
+
+public class TreeSetExample {
+
+    public static void main(String[] args) {
+
+        TreeSet<Integer> set = new TreeSet<>();
+
+        set.add(40);
+        set.add(10);
+        set.add(30);
+        set.add(20);
+
+        System.out.println(set);
+    }
+}
+```
+
+**Output**
+
+```
+[10, 20, 30, 40]
+```
+
+---
+
+# Methods of Set Interface
+
+These methods are available in all classes that implement the `Set` interface.
 
 | Method | Description | Example |
 |---------|-------------|---------|
@@ -475,51 +559,60 @@ public class HashSetExample {
 | `addAll(Collection c)` | Adds all elements from another collection | `set.addAll(set2);` |
 | `remove(Object o)` | Removes an element | `set.remove("Java");` |
 | `removeAll(Collection c)` | Removes matching elements | `set.removeAll(set2);` |
-| `retainAll(Collection c)` | Keeps common elements | `set.retainAll(set2);` |
-| `contains(Object o)` | Checks if an element exists | `set.contains("Java");` |
+| `retainAll(Collection c)` | Keeps only common elements | `set.retainAll(set2);` |
+| `contains(Object o)` | Checks whether an element exists | `set.contains("Java");` |
 | `containsAll(Collection c)` | Checks if all elements exist | `set.containsAll(set2);` |
 | `size()` | Returns number of elements | `set.size();` |
-| `isEmpty()` | Checks whether the set is empty | `set.isEmpty();` |
+| `isEmpty()` | Checks if set is empty | `set.isEmpty();` |
 | `clear()` | Removes all elements | `set.clear();` |
 | `iterator()` | Returns an iterator | `set.iterator();` |
-| `toArray()` | Converts set to array | `set.toArray();` |
+| `toArray()` | Converts set into an array | `set.toArray();` |
 
 ---
 
-# Example Using HashSet Methods
+# Special Methods of TreeSet
+
+TreeSet provides additional methods because it stores elements in sorted order.
+
+| Method | Description | Example |
+|---------|-------------|---------|
+| `first()` | Returns first element | `set.first();` |
+| `last()` | Returns last element | `set.last();` |
+| `higher(E e)` | Returns next greater element | `set.higher(20);` |
+| `lower(E e)` | Returns next smaller element | `set.lower(20);` |
+| `ceiling(E e)` | Returns greater than or equal element | `set.ceiling(25);` |
+| `floor(E e)` | Returns smaller than or equal element | `set.floor(25);` |
+| `pollFirst()` | Removes and returns first element | `set.pollFirst();` |
+| `pollLast()` | Removes and returns last element | `set.pollLast();` |
+
+---
+
+# Example Using Set Methods
 
 ```java
 import java.util.*;
 
-public class HashSetMethods {
+public class SetMethodsExample {
 
     public static void main(String[] args) {
 
-        HashSet<String> set = new HashSet<>();
+        Set<String> set = new HashSet<>();
 
         // add()
         set.add("Java");
         set.add("Python");
-        set.add("C++");
-
-        // contains()
-        System.out.println("Contains Java : " + set.contains("Java"));
-
-        // size()
-        System.out.println("Size : " + set.size());
-
-        // remove()
-        set.remove("Python");
-
-        // add duplicate
         set.add("Java");
 
-        // iterator()
-        Iterator<String> it = set.iterator();
+        // contains()
+        System.out.println(set.contains("Python"));
 
-        while(it.hasNext()){
-            System.out.println(it.next());
-        }
+        // size()
+        System.out.println(set.size());
+
+        // remove()
+        set.remove("Java");
+
+        System.out.println(set);
 
         // isEmpty()
         System.out.println(set.isEmpty());
@@ -527,109 +620,84 @@ public class HashSetMethods {
         // clear()
         set.clear();
 
-        System.out.println("After clear : " + set);
+        System.out.println(set.isEmpty());
     }
 }
 ```
 
-### Sample Output
+**Output**
 
 ```
-Contains Java : true
-Size : 3
-Java
-C++
+true
+2
+[Python]
 false
-After clear : []
+true
 ```
 
 ---
 
-# Traversing HashSet
-
-## Using Enhanced For Loop
+# Example Using TreeSet Methods
 
 ```java
-HashSet<String> set = new HashSet<>();
+import java.util.*;
 
-set.add("Java");
-set.add("Python");
-set.add("C++");
+public class TreeSetMethods {
 
-for(String language : set){
-    System.out.println(language);
+    public static void main(String[] args) {
+
+        TreeSet<Integer> set = new TreeSet<>();
+
+        set.add(50);
+        set.add(10);
+        set.add(30);
+        set.add(20);
+        set.add(40);
+
+        System.out.println("First : " + set.first());
+        System.out.println("Last : " + set.last());
+        System.out.println("Higher : " + set.higher(20));
+        System.out.println("Lower : " + set.lower(20));
+        System.out.println("Ceiling : " + set.ceiling(25));
+        System.out.println("Floor : " + set.floor(25));
+    }
 }
 ```
 
----
+**Output**
 
-## Using Iterator
-
-```java
-Iterator<String> it = set.iterator();
-
-while(it.hasNext()){
-    System.out.println(it.next());
-}
+```
+First : 10
+Last : 50
+Higher : 30
+Lower : 10
+Ceiling : 30
+Floor : 20
 ```
 
 ---
 
-# Advantages of HashSet
+# Quick Comparison of Set Implementations
 
-- Very fast insertion.
-- Very fast searching.
-- Prevents duplicate elements automatically.
-- Dynamic size.
-- Easy to use.
-
----
-
-# Disadvantages of HashSet
-
-- Does not maintain insertion order.
-- Elements are not sorted.
-- Only one `null` value is allowed.
+| Feature | HashSet | LinkedHashSet | TreeSet |
+|---------|---------|---------------|---------|
+| Data Structure | Hash Table | Hash Table + Linked List | Red-Black Tree |
+| Stores Duplicates | ❌ | ❌ | ❌ |
+| Maintains Order | ❌ | ✅ | Sorted Order |
+| Allows null | ✅ (One) | ✅ (One) | ❌ |
+| Thread Safe | ❌ | ❌ | ❌ |
+| Search Performance | Fastest | Fast | Slower |
+| Best Use Case | Fast searching | Preserve insertion order | Automatically sorted data |
 
 ---
 
-# Time Complexity
+# When to Use Which Set?
 
-| Operation | Time Complexity |
-|-----------|-----------------|
-| `add()` | O(1) Average |
-| `remove()` | O(1) Average |
-| `contains()` | O(1) Average |
-| `size()` | O(1) |
-| `iterator()` | O(n) |
-
----
-
-# When to Use HashSet
-
-Use `HashSet` when:
-
-- Duplicate values are not allowed.
-- Order of elements is not important.
-- Fast insertion and searching are required.
-
----
-
-# Quick Revision
-
-| Feature | HashSet |
-|---------|---------|
-| Interface | Set |
-| Duplicate Elements | ❌ No |
-| Insertion Order | ❌ No |
-| Sorted | ❌ No |
-| Null Values | ✅ One Allowed |
-| Thread Safe | ❌ No |
-| Data Structure | Hash Table (internally uses HashMap) |
-| Best For | Fast search and unique elements |
-
-
-
+| Collection | Use When |
+|------------|----------|
+| **HashSet** | You need the fastest insertion and searching, and order does not matter. |
+| **LinkedHashSet** | You want unique elements while preserving insertion order. |
+| **TreeSet** | You need unique elements in sorted (ascending) order. |
 # Queue Interface
 
 ## Definition
